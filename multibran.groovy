@@ -14,7 +14,7 @@ pipeline {
         // This can be http or https
         NEXUS_PROTOCOL = "http"
         // Where your Nexus is running. 'nexus-3' is defined in the docker-compose file
-        NEXUS_URL = "18.207.203.164:8081"
+        NEXUS_URL = "18.219.107.32:8088"
         // Jenkins credential id to authenticate to Nexus OSS
         NEXUS_CREDENTIAL_ID = "NEXUS_CREDENTIALS"
     }
@@ -52,7 +52,6 @@ pipeline {
                     // Read POM xml file using 'readMavenPom' step , this step 'readMavenPom' is included in: https://plugins.jenkins.io/pipeline-utility-steps
                     
                     pomversion = sh(returnStdout: true,script:"sed -n '/<parent>/,/<\\/parent>/p' gameoflife-web/pom.xml| sed -ne '/<version>/p'|sed -e 's/<version>//' -e 's/<\\/version>//'").toString().trim()
-                    
                     pom = readMavenPom file: "gameoflife-web/pom.xml";
                     // Find built artifact under target folder
                     filesByGlob = findFiles(glob: "gameoflife-web/target/*.${pom.packaging}");
